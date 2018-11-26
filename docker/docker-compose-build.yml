@@ -4,21 +4,10 @@ services:
     image: "composer:latest"
     volumes:
       - ../server:/app
-      - server-volume:/var/www/html
-    networks:
-      - "dashnet"
     command: composer install
   build-client:
     image: "node:11-alpine"
     working_dir: /app
     volumes:
       - ../client:/app
-      - client-volume:/app
-    networks:
-      - "dashnet"
     command: yarn build
-networks:
-  dashnet:
-volumes:
-  server-volume:
-  client-volume:

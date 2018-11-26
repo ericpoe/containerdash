@@ -4,9 +4,6 @@ services:
     image: "composer:latest"
     volumes:
       - ../server:/app
-      - server-dev-volume:/var/www/html
-    networks:
-      - "dashnet-dev"
     command: composer install
   server-dev:
     depends_on:
@@ -16,10 +13,7 @@ services:
       - 9081:80
     volumes:
       - ../server/:/var/www/
-      - ../server/public/index.php:/var/www/html/index.php
-      - server-dev-volume:/var/www/html
-    networks:
-      - "dashnet-dev"
+      - ../server/public/:/var/www/html
   client-dev:
     depends_on:
       - server-dev-build
@@ -30,12 +24,4 @@ services:
       - 9080:8080
     volumes:
       - ../client:/app
-      - client-dev-volume:/app
-    networks:
-      - "dashnet-dev"
     command: yarn serve --watch
-networks:
-  dashnet-dev:
-volumes:
-  server-dev-volume:
-  client-dev-volume:
