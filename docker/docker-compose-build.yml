@@ -1,26 +1,22 @@
 version: "3"
 services:
-  server:
-    image: "php:7.1-apache"
-    ports:
-      - 9091:80
+  build-server:
+    image: "composer:latest"
     volumes:
-      - ../server/:/var/www/
-      - ../server/public/index.php:/var/www/html/index.php
+      - ../server:/app
       - server-volume:/var/www/html
     networks:
       - "dashnet"
-  client:
-    build: client
-    image: containerdash/client
+    command: composer install
+  build-client:
+    image: "node:11-alpine"
     working_dir: /app
-    ports:
-      - 9090:8080
     volumes:
       - ../client:/app
       - client-volume:/app
     networks:
       - "dashnet"
+    command: yarn build
 networks:
   dashnet:
 volumes:
