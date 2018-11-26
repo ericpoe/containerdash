@@ -6,10 +6,7 @@ services:
       - 9091:80
     volumes:
       - ../server/:/var/www/
-      - ../server/public/index.php:/var/www/html/index.php
-      - server-volume:/var/www/html
-    networks:
-      - "dashnet"
+      - ../server/public/:/var/www/html
   client:
     build: client
     image: containerdash/client
@@ -18,11 +15,3 @@ services:
       - 9090:8080
     volumes:
       - ../client:/app
-      - client-volume:/app
-    networks:
-      - "dashnet"
-networks:
-  dashnet:
-volumes:
-  server-volume:
-  client-volume:

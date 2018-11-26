@@ -1,0 +1,27 @@
+version: "3"
+services:
+  server-dev-build:
+    image: "composer:latest"
+    volumes:
+      - ../server:/app
+    command: composer install
+  server-dev:
+    depends_on:
+      - server-dev-build
+    image: "php:7.1-apache"
+    ports:
+      - 9081:80
+    volumes:
+      - ../server/:/var/www/
+      - ../server/public/:/var/www/html
+  client-dev:
+    depends_on:
+      - server-dev-build
+      - server-dev
+    image: "node:11-alpine"
+    working_dir: /app
+    ports:
+      - 9080:8080
+    volumes:
+      - ../client:/app
+    command: yarn serve --watch
