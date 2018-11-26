@@ -1,4 +1,4 @@
-# client
+# Container Dashboard Client
 
 ## Project setup
 ```
